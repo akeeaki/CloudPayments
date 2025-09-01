@@ -1,0 +1,9 @@
+name: CloudPayments-Legacy
+version: '${version}'
+main: ru.clouddonate.cloudpaymentslegacy.CloudPayments
+prefix: CPayments
+authors: [CloudDonate Developers and Contributors]
+website: https://cdonate.ru/
+commands:
+  cloudpayments:
+    aliases: [cpayments]

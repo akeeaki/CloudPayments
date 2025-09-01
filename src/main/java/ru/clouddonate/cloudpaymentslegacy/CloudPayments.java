@@ -19,7 +19,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.clouddonate.cloudpaymentslegacy.announcements.AnnouncementsManager;
 import ru.clouddonate.cloudpaymentslegacy.command.CommandHandler;
 import ru.clouddonate.cloudpaymentslegacy.config.Config;
-import ru.clouddonate.cloudpaymentslegacy.handler.PlayerJoinHandler;
 import ru.clouddonate.cloudpaymentslegacy.http.HttpReader;
 import ru.clouddonate.cloudpaymentslegacy.json.JSONConverterService;
 import ru.clouddonate.cloudpaymentslegacy.localstorage.LocalStorage;
@@ -34,22 +33,12 @@ public final class CloudPayments extends JavaPlugin {
     private LocalStorage localStorage;
 
     @Getter
-    private final String version = "1.0";
-    @Getter
-    private String latestVersion;
-    @Getter
-    private boolean updateFound = false;
+    private final String version = "1.0.1 hotfix #1";
 
     public void onEnable() {
         this.saveDefaultConfig();
         this.converterService = new JSONConverterService();
         Config.load(this);
-
-        if (Config.Settings.checkUpdates) {
-            this.latestVersion = HttpReader.getLinesFromUrl("https://raw.githubusercontent.com/akeeaki/CloudPayments/refs/heads/master/musor/LATEST-VERSION").get(0);
-            System.out.println("found: " + this.latestVersion);
-            if (!latestVersion.equals(this.version)) this.updateFound = true;
-        }
 
         this.messengersManager = new MessengersManager(this);
         this.announcementsManager = new AnnouncementsManager(this);
@@ -61,8 +50,6 @@ public final class CloudPayments extends JavaPlugin {
 
         this.shop = new Shop(ru.clouddonate.cloudpaymentslegacy.config.Config.Settings.Shop.shopId, ru.clouddonate.cloudpaymentslegacy.config.Config.Settings.Shop.shopKey, ru.clouddonate.cloudpaymentslegacy.config.Config.Settings.Shop.serverId, Config.Settings.requestDelay, this);
         this.getCommand("cloudpayments").setExecutor(new CommandHandler(this));
-
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinHandler(this), this);
     }
 
     public void onDisable() {

@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import ru.clouddonate.cloudpaymentslegacy.CloudPayments;
 import ru.clouddonate.cloudpaymentslegacy.config.Config;
+import ru.clouddonate.cloudpaymentslegacy.shop.Shop;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +34,15 @@ public final class CommandHandler
                     Config.load(this.cloudPayments);
                     this.cloudPayments.getMessengersManager().reload();
                     this.cloudPayments.getAnnouncementsManager().reload();
+                    this.cloudPayments.setShop(
+                            new Shop(
+                                    Config.Settings.Shop.shopId,
+                                    Config.Settings.Shop.shopKey,
+                                    Config.Settings.Shop.serverId,
+                                    Config.Settings.requestDelay,
+                                    this.cloudPayments
+                            )
+                    );
                     commandSender.sendMessage(Config.format(Config.Messages.reload.replaceAll("\\{took}", String.valueOf(System.currentTimeMillis() - start))));
                 }
             } else if (strings.length == 2 && strings[0].equalsIgnoreCase("debug")) {

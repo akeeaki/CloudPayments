@@ -12,12 +12,14 @@ import java.io.File;
 import java.util.logging.Level;
 
 import lombok.Generated;
+import lombok.Getter;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.clouddonate.cloudpaymentslegacy.announcements.AnnouncementsManager;
 import ru.clouddonate.cloudpaymentslegacy.command.CommandHandler;
 import ru.clouddonate.cloudpaymentslegacy.config.Config;
+import ru.clouddonate.cloudpaymentslegacy.http.HttpReader;
 import ru.clouddonate.cloudpaymentslegacy.json.JSONConverterService;
 import ru.clouddonate.cloudpaymentslegacy.localstorage.LocalStorage;
 import ru.clouddonate.cloudpaymentslegacy.messengers.MessengersManager;
@@ -30,8 +32,21 @@ public final class CloudPayments extends JavaPlugin {
     private JSONConverterService converterService;
     private LocalStorage localStorage;
 
+    @Getter
+    private final String version = "1.0";
+    @Getter
+    private String latestVersion;
+    @Getter
+    private boolean updateFound = false;
+
     public void onEnable() {
         this.saveDefaultConfig();
+
+        if (Config.Settings.checkUpdates) {
+            this.latestVersion = HttpReader.getLinesFromUrl("https://raw.githubusercontent.com/akeeaki/CloudPayments/refs/heads/master/musor/LATEST-VERSION").get(0);
+            if (!latestVersion.equals(this.version)) this.updateFound = true;
+        }
+
         this.converterService = new JSONConverterService();
         Config.load(this);
         this.messengersManager = new MessengersManager(this);

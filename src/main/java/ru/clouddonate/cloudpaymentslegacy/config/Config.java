@@ -19,6 +19,7 @@ public final class Config {
         Messages.debugDisabled = Config.format(cloudPayments.getConfig().getString("messages.debug-disabled"));
         Messages.debugEnabled = Config.format(cloudPayments.getConfig().getString("messages.debug-enabled"));
         Settings.debug = config.getBoolean("settings.debug-mode");
+        Settings.checkUpdates = config.getBoolean("settings.check-updates");
         Settings.requestDelay = config.getLong("settings.request-delay");
         LocalStorage.Payments.enabled = config.getBoolean("local-storage.payments.enabled");
         LocalStorage.Payments.format = config.getString("local-storage.payments.format");
@@ -46,7 +47,7 @@ public final class Config {
     }
 
     public static class Settings {
-        public static boolean debug;
+        public static boolean debug, checkUpdates;
         public static long requestDelay;
 
         public static class Shop {

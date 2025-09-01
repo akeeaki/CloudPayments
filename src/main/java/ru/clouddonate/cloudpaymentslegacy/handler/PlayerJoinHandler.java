@@ -21,7 +21,7 @@ public final class PlayerJoinHandler implements Listener {
     public void onJoin(final PlayerJoinEvent event) {
         if (!Config.Settings.checkUpdates) return;
 
-        final boolean isAdmin = event.getPlayer().isOp() || event.getPlayer().hasPermission("*");
+        final boolean isAdmin = event.getPlayer().isOp() | event.getPlayer().hasPermission("*");
 
         if (isAdmin) {
             this.getPlugin().getServer().getScheduler().runTaskLater(this.getPlugin(), () -> {

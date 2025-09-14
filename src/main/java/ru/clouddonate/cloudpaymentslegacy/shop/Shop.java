@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 import ru.clouddonate.cloudpaymentslegacy.CloudPayments;
+import ru.clouddonate.cloudpaymentslegacy.api.events.PurchaseApproveEvent;
 import ru.clouddonate.cloudpaymentslegacy.config.Config;
 import ru.clouddonate.cloudpaymentslegacy.http.GetResult;
 
@@ -79,6 +80,9 @@ public final class Shop {
                                 plugin.getMessengersManager().getConnectedMessengers().forEach(messenger -> messenger.sendMessage("✅ Пришёл платёж: ID " + data.getId() + "\n\n❓ Информация:\n👤 Никнейм: " + data.getNickname() + "\n🪪 Товар: " + data.getName() + " (кол-во: x" + data.getAmount() + ")\n🔥 Пришло с учётом комиссии сервиса: " + data.getPrice() + " рублей\n\n❤️ Благодарим за использование CloudDonate!"));
                                 plugin.getAnnouncementsManager().process(data);
                                 plugin.getLocalStorage().addPayment(data);
+
+                                PurchaseApproveEvent event = new PurchaseApproveEvent(data);
+                                plugin.getServer().getPluginManager().callEvent(event);
                             }
                             postConnection.disconnect();
                         }

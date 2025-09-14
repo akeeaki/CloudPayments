@@ -9,11 +9,11 @@ import ru.clouddonate.cloudpaymentslegacy.CloudPayments;
 import ru.clouddonate.cloudpaymentslegacy.config.Config;
 import ru.clouddonate.cloudpaymentslegacy.http.GetResult;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public final class Announcement {
     private final String productName;
-    private final HashMap<String, AnnounceEnum> actions = new HashMap();
+    private final LinkedHashMap<String, AnnounceEnum> actions = new LinkedHashMap<>();
 
     public Announcement(String productName) {
         this.productName = productName;
@@ -62,7 +62,7 @@ public final class Announcement {
     }
 
     @Generated
-    public HashMap<String, AnnounceEnum> getActions() {
+    public LinkedHashMap<String, AnnounceEnum> getActions() {
         return this.actions;
     }
 }

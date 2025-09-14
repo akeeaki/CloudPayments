@@ -1,4 +1,4 @@
-name: CloudPayments-Legacy
+name: CloudPayments
 version: '${version}'
 main: ru.clouddonate.cloudpaymentslegacy.CloudPayments
 prefix: CPayments

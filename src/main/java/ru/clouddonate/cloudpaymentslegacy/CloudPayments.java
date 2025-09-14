@@ -33,7 +33,7 @@ public final class CloudPayments extends JavaPlugin {
     private LocalStorage localStorage;
 
     @Getter
-    private final String version = "1.0.1 hotfix #1";
+    private final String version = "1.0.2";
 
     public void onEnable() {
         this.saveDefaultConfig();

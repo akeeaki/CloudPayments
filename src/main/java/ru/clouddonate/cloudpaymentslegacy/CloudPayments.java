@@ -31,7 +31,7 @@ public final class CloudPayments extends JavaPlugin {
     private Metrics metrics;
 
     @Getter
-    private final String version = "1.0.2";
+    private final String version = "1.0.2.1";
 
     public void onEnable() {
         this.saveDefaultConfig();

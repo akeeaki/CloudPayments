@@ -9,17 +9,14 @@
 package ru.clouddonate.cloudpaymentslegacy;
 
 import java.io.File;
-import java.util.logging.Level;
 
 import lombok.Generated;
 import lombok.Getter;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.plugin.Plugin;
+import ru.clouddonate.cloudpaymentslegacy.metrics.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.clouddonate.cloudpaymentslegacy.announcements.AnnouncementsManager;
 import ru.clouddonate.cloudpaymentslegacy.command.CommandHandler;
 import ru.clouddonate.cloudpaymentslegacy.config.Config;
-import ru.clouddonate.cloudpaymentslegacy.http.HttpReader;
 import ru.clouddonate.cloudpaymentslegacy.json.JSONConverterService;
 import ru.clouddonate.cloudpaymentslegacy.localstorage.LocalStorage;
 import ru.clouddonate.cloudpaymentslegacy.messengers.MessengersManager;
@@ -31,6 +28,7 @@ public final class CloudPayments extends JavaPlugin {
     private Shop shop;
     private JSONConverterService converterService;
     private LocalStorage localStorage;
+    private Metrics metrics;
 
     @Getter
     private final String version = "1.0.2";
@@ -50,6 +48,8 @@ public final class CloudPayments extends JavaPlugin {
 
         this.shop = new Shop(ru.clouddonate.cloudpaymentslegacy.config.Config.Settings.Shop.shopId, ru.clouddonate.cloudpaymentslegacy.config.Config.Settings.Shop.shopKey, ru.clouddonate.cloudpaymentslegacy.config.Config.Settings.Shop.serverId, Config.Settings.requestDelay, this);
         this.getCommand("cloudpayments").setExecutor(new CommandHandler(this));
+
+        this.metrics = new Metrics(this, 27282);
     }
 
     public void onDisable() {

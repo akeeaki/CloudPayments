@@ -81,8 +81,10 @@ public final class Shop {
                                 plugin.getAnnouncementsManager().process(data);
                                 plugin.getLocalStorage().addPayment(data);
 
-                                PurchaseApproveEvent event = new PurchaseApproveEvent(data);
-                                plugin.getServer().getPluginManager().callEvent(event);
+                                plugin.getServer().getScheduler().runTask(plugin, () -> {
+                                    PurchaseApproveEvent event = new PurchaseApproveEvent(data);
+                                    plugin.getServer().getPluginManager().callEvent(event);
+                                });
                             }
                             postConnection.disconnect();
                         }

@@ -35,7 +35,10 @@ public final class Shop {
         this.plugin = plugin;
         this.shopKey = shopKey;
         this.serverId = serverId;
-        this.requestDelay = requestDelay;
+
+        if (requestDelay < 20) this.requestDelay = 20;
+        else this.requestDelay = requestDelay;
+
         this.runnable = new BukkitRunnable(){
 
             public void run() {
@@ -106,7 +109,7 @@ public final class Shop {
                             });
                         }
                     } else {
-                        plugin.getLogger().warning("Failed to fetch data. Response code: " + getResponseCode);
+                        if (Config.Settings.debug) plugin.getLogger().warning("Failed to fetch data. Response code: " + getResponseCode);
                     }
                     getConnection.disconnect();
                 }
